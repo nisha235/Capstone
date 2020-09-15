@@ -34,7 +34,7 @@ pipeline {
         stage('Pushing Docker Image') {
             steps {
                 withDockerRegistry([url: "", credentialsId: "docker-id"]) {
-                    sh 'bash upload_docker.sh'
+                  sudo  sh 'bash upload_docker.sh'
                 }
             }
         }
