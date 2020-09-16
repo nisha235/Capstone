@@ -36,7 +36,7 @@ pipeline {
         withCredentials([usernamePassword( credentialsId: 'docker-id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
         def registry_url = "registry.hub.docker.com/"
         bat "docker login -u $USER -p $PASSWORD ${registry_url}"
-        withDockerRegistry("http://${registry_url}", "docker-hub-credentials") {
+        withDockerRegistry([url: "", credentialsId: "docker-id"])  {
             // Push your image now
             sh 'sudo bash upload_docker.sh'
         }
