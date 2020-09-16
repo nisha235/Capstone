@@ -31,17 +31,16 @@ pipeline {
             }
         }
         
-        stage('Pushing Docker Image') {
-        steps {
-        withCredentials([usernamePassword( credentialsId: 'docker-id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+        stage('Push image') {
+    withCredentials([usernamePassword( credentialsId: 'docker-id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
         def registry_url = "registry.hub.docker.com/"
         bat "docker login -u $USER -p $PASSWORD ${registry_url}"
-        withDockerRegistry([url: "", credentialsId: "docker-id"])  {
+        docker.withRegistry("http://${registry_url}", "docker-id") {
             // Push your image now
-            sh 'sudo bash upload_docker.sh'
+            bat "docker push nisha2305/capstone_microservice:v1"
         }
     }
-            }}
+}
                 
   /*
          stage('Deploying') {
