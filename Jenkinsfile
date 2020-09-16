@@ -43,18 +43,18 @@ pipeline {
 			}
 		}
                
-  /*
+  
          stage('Deploying') {
               steps{
                   echo 'Deploying to AWS EKS ....'
                   withAWS(credentials: 'aws_cred', region: 'ap-south-1') {
-                      sh "aws eks --region ap-south-1 update-kubeconfig --name capstone"
-                      sh "kubectl config use-context arn:aws:eks:ap-south-1:936344068960:cluster/capstone"
+                      sh "aws eks --region ap-south-1 update-kubeconfig --name capstone-app"
+                      sh "kubectl config use-context arn:aws:eks:ap-south-1:936344068960:cluster/capstone-app"
                       sh "kubectl apply -f ./clusters/deploy.yaml"
                       
                 }
             }
         }
-        */
+        
     }
 }
