@@ -31,17 +31,17 @@ pipeline {
             }
         }
         
-        stage('Push image') {
-        steps{
-    withCredentials([usernamePassword( credentialsId: 'docker-id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-        def registry_url = "registry.hub.docker.com/"
-        bat "docker login -u $USER -p $PASSWORD ${registry_url}"
-        docker.withRegistry("http://${registry_url}", "docker-id") {
-            // Push your image now
-            bat "docker push nisha2305/capstone_microservice:v1"
-        }
-    }
-}
+        stage('Push Image To Dockerhub') {
+			steps {
+				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-id', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+					sh '''
+						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+						docker tag nisha2305/capstone_microservice nisha2305/capstone_microservice:v1
+                        docker push nisha2305/capstone_microservice:v1
+					'''
+				}
+			}
+		}
      }           
   /*
          stage('Deploying') {
