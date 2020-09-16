@@ -47,9 +47,9 @@ pipeline {
          stage('Deploying') {
               steps{
                   echo 'Deploying to AWS EKS ....'
-                  withAWS(credentials: 'aws_cred', region: 'ap-south-1') {
-                      sh "aws eks --region ap-south-1 update-kubeconfig --name capstone-app"
-                      sh "kubectl config use-context arn:aws:eks:ap-south-1:936344068960:cluster/capstone-app"
+                  withAWS(credentials: 'aws_cred', region: 'eu-west-2') {
+                      sh "aws eks --region eu-west-2 update-kubeconfig --name capstone-app"
+                      sh "kubectl config use-context arn:aws:eks:eu-west-2:158324264367:cluster/capstone-app"
                       sh "kubectl apply -f ./clusters/deploy.yaml"
                       
                 }
